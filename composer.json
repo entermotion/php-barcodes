@@ -1,0 +1,15 @@
+{
+  "name": "entermotion/php-barcodes",
+  "type": "library",
+  "description": "This is a barcode generator based on the original author Dinesh Rabara.",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Barcodes\\": "src/Barcodes"
+    }
+  }
+}
