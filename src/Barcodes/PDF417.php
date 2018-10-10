@@ -4296,7 +4296,10 @@ class PDF417
     $maxecl = 8; // starting error level
     $maxerrsize = (928 - $numcw); // available codewords for error
     while ($maxecl > 0) {
-      $errsize = (2 << $ecl);
+      $errsize = 0;
+      if ($ecl >= 0) { // Avoid PHP7 ArithmeticError
+        $errsize = (2 << $ecl);
+      }
       if ($maxerrsize >= $errsize) {
         break;
       }
@@ -4392,8 +4395,8 @@ class PDF417
             if (strlen($prevtxtseq) > 0) {
               // add BYTE sequence
               if ((strlen($prevtxtseq) == 1) and ((count($sequence_array) > 0) and ($sequence_array[(count(
-                $sequence_array
-              ) - 1)][0] == 900))) {
+                        $sequence_array
+                      ) - 1)][0] == 900))) {
                 $sequence_array[] = array(913, $prevtxtseq);
               } elseif ((strlen($prevtxtseq) % 6) == 0) {
                 $sequence_array[] = array(924, $prevtxtseq);
@@ -4446,9 +4449,9 @@ class PDF417
               if (($s != $submode) and (($k = array_search($chval, $this->textsubmodes[$s])) !== false)) {
                 // $s is the new submode
                 if (((($i + 1) == $codelen) or ((($i + 1) < $codelen) and (array_search(
-                  ord($code{($i + 1)}),
-                  $this->textsubmodes[$submode]
-                ) !== false))) and (($s == 3) or (($s == 0) and ($submode == 1)))) {
+                          ord($code{($i + 1)}),
+                          $this->textsubmodes[$submode]
+                        ) !== false))) and (($s == 3) or (($s == 0) and ($submode == 1)))) {
                   // shift (temporary change only for this char)
                   if ($s == 3) {
                     // shift to puntuaction
