@@ -4438,7 +4438,7 @@ class PDF417
         $txtarr = array(); // array of characters and sub-mode switching characters
         $codelen = strlen($code);
         for ($i = 0; $i < $codelen; ++$i) {
-          $chval = ord($code{$i});
+          $chval = ord($code[$i]);
           if (($k = array_search($chval, $this->textsubmodes[$submode])) !== false) {
             // we are on the same sub-mode
             $txtarr[] = $k;
@@ -4449,7 +4449,7 @@ class PDF417
               if (($s != $submode) and (($k = array_search($chval, $this->textsubmodes[$s])) !== false)) {
                 // $s is the new submode
                 if (((($i + 1) == $codelen) or ((($i + 1) < $codelen) and (array_search(
-                          ord($code{($i + 1)}),
+                          ord($code[($i + 1)]),
                           $this->textsubmodes[$submode]
                         ) !== false))) and (($s == 3) or (($s == 0) and ($submode == 1)))) {
                   // shift (temporary change only for this char)
@@ -4497,12 +4497,12 @@ class PDF417
             $sublen = strlen($code);
           }
           if ($sublen == 6) {
-            $t = bcmul('' . ord($code{0}), '1099511627776');
-            $t = bcadd($t, bcmul('' . ord($code{1}), '4294967296'));
-            $t = bcadd($t, bcmul('' . ord($code{2}), '16777216'));
-            $t = bcadd($t, bcmul('' . ord($code{3}), '65536'));
-            $t = bcadd($t, bcmul('' . ord($code{4}), '256'));
-            $t = bcadd($t, '' . ord($code{5}));
+            $t = bcmul('' . ord($code[0]), '1099511627776');
+            $t = bcadd($t, bcmul('' . ord($code[1]), '4294967296'));
+            $t = bcadd($t, bcmul('' . ord($code[2]), '16777216'));
+            $t = bcadd($t, bcmul('' . ord($code[3]), '65536'));
+            $t = bcadd($t, bcmul('' . ord($code[4]), '256'));
+            $t = bcadd($t, '' . ord($code[5]));
             do {
               $d = bcmod($t, '900');
               $t = bcdiv($t, '900');
@@ -4510,7 +4510,7 @@ class PDF417
             } while ($t != '0');
           } else {
             for ($i = 0; $i < $sublen; ++$i) {
-              $cw[] = ord($code{$i});
+              $cw[] = ord($code[$i]);
             }
           }
           $code = $rest;
